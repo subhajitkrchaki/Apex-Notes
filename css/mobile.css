@@ -1,0 +1,208 @@
+/* ==========================================================================
+   ApexNotes - Mobile & Responsive Layout Stylesheet (Android & Handheld)
+   ========================================================================== */
+
+/* Bottom Navigation Bar (Hidden by default on Desktop) */
+.mobile-bottom-nav {
+  display: none;
+}
+
+.mobile-fab {
+  display: none;
+}
+
+.mobile-header-btn {
+  display: none;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Viewports (Tablets and Android Phones <= 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Layout transformation */
+  #app {
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport for mobile browser chrome */
+  }
+
+  /* Slide-over Sidebar Drawer */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 290px;
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-xl);
+    z-index: 120;
+    transition: transform var(--transition-normal) ease;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 110;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-normal);
+  }
+
+  .sidebar-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Panes default to taking full width */
+  .notes-pane {
+    width: 100%;
+    flex: 1;
+    border-right: none;
+    padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+
+  .editor-pane {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    transform: translateX(100%);
+    transition: transform var(--transition-normal) ease;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Active Editor View on Mobile */
+  #app.mobile-view-editor .editor-pane {
+    transform: translateX(0);
+  }
+
+  /* Mobile Header Adjustments */
+  .mobile-header-btn {
+    display: inline-flex;
+  }
+
+  .notes-header-top {
+    gap: 0.5rem;
+  }
+
+  .editor-header {
+    padding: 0.6rem 0.85rem;
+  }
+
+  .editor-title-input {
+    font-size: 1.4rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .formatting-toolbar {
+    padding: 0.35rem 0.75rem;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .formatting-toolbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mode-toggle-group {
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /* Hide Split Mode Button on Mobile (Only Edit and Preview make sense) */
+  .mode-btn[data-mode="split"] {
+    display: none;
+  }
+
+  /* Bottom Navigation Bar for Android */
+  .mobile-bottom-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--bg-glass);
+    backdrop-filter: var(--backdrop-blur);
+    border-top: 1px solid var(--border-subtle);
+    padding-bottom: env(safe-area-inset-bottom);
+    z-index: 80;
+  }
+
+  .nav-bar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    font-weight: 600;
+    flex: 1;
+    height: 100%;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-bar-item svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nav-bar-item.active {
+    color: var(--accent-primary);
+  }
+
+  /* Mobile Floating Action Button (FAB) */
+  .mobile-fab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: calc(76px + env(safe-area-inset-bottom));
+    right: 1.25rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+    color: #ffffff;
+    box-shadow: 0 8px 20px var(--accent-glow);
+    z-index: 85;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .mobile-fab:active {
+    transform: scale(0.92);
+  }
+
+  .mobile-fab svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* Hide FAB when in editor mode */
+  #app.mobile-view-editor .mobile-fab,
+  #app.mobile-view-editor .mobile-bottom-nav {
+    display: none;
+  }
+
+  /* Floating Toasts adjustment for mobile */
+  #toast-container {
+    bottom: calc(70px + env(safe-area-inset-bottom));
+    right: 1rem;
+    left: 1rem;
+  }
+}
